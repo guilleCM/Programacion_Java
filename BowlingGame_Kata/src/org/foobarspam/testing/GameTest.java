@@ -9,6 +9,7 @@ public class GameTest {
 
 	@Test
 	public void NormalThrowTest() {
+		Game inyector = new Game(1,2);
 	}
 
 }

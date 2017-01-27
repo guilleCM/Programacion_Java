@@ -12,7 +12,7 @@ public class Game {
 		this.firstRoll = firstRoll;
 		this.secondRoll = secondRoll;
 	}
-	
+	eferf
 	public void throwBall() {
 	}
 	
