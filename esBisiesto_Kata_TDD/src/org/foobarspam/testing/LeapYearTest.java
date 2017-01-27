@@ -61,6 +61,8 @@ public class LeapYearTest {
 	public void test_isLeapYear_eight() {
 		inyector.setYear(3548);
 		assertEquals("Numero acabado en 8",true, inyector.isLeapYear());
+		inyector.setYear(1258);
+		assertEquals("Numero acabado en 8",true, inyector.isLeapYear());
 	}
 	
 	@Test
