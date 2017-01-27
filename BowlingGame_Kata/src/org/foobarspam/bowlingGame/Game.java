@@ -14,7 +14,6 @@ public class Game {
 	}
 	
 	public void throwBall() {
-		setFirstRoll(first)
 	}
 	
 	private void setFirstRoll(int firstRoll) {

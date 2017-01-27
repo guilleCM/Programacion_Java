@@ -9,11 +9,6 @@ public class GameTest {
 
 	@Test
 	public void NormalThrowTest() {
-		Game firstThrow = new Game(2,3);
-		firstThrow.frameThrows();
-		assertEquals(5, firstThrow.getScore());
-		firstThrow = new Game(3,4);
-		
 	}
 
 }
