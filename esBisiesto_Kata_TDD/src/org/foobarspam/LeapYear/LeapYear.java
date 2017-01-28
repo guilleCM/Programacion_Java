@@ -8,6 +8,7 @@ public class LeapYear {
 	private int year = 0;
 	
 	public LeapYear() {
+		//Constructor por defecto ==> Año Actual
 		DateFormat df = new SimpleDateFormat("yyyy");
 		Date dateobj = new Date();
 		int currentYear = Integer.parseInt(df.format(dateobj));

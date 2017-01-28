@@ -1,11 +1,11 @@
-package org.foobarspam.TarjetaPrepago;
+package org.foobarspam.testing;
 
 import static org.junit.Assert.*;
 
+import org.foobarspam.TarjetaPrepago.*;
 import org.junit.Test;
 
-public class TestHora {
-
+public class HoraTest {
 	
 	@Test
 	public void testHora() {
