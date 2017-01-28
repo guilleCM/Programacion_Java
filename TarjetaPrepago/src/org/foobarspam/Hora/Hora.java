@@ -29,10 +29,37 @@ public class Hora {
 	}
 	
 	public void setHora(int hora, int minutos, int segundos) {
-		this.hora = hora;
-		this.minutos = minutos;
-		this.segundos = segundos;
+		if (hora > 23 || hora < 0) {
+			this.hora = 0;
+		} else { this.hora = hora; }
+		if (minutos > 59 || minutos < 0) {
+			this.minutos = 0;
+		} else { this.minutos = minutos; }
+		if (segundos > 59 || segundos < 0) {
+			this.segundos = 0;
+		} else { this.segundos = segundos; }
 	}
+	
+    public void setMinutos(int minutos) {
+        this.minutos = minutos;
+    }
+    
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+    
+    public int getHora() {
+    	return this.hora;
+    }
+    
+    public int getMinutos() {
+    	return this.minutos;
+    }
+    
+    public int getSegundos() {
+        return this.segundos;
+    }
+              
 	public String imprimirHora() {
 		String hora = String.valueOf(this.hora);
 		String minutos = String.valueOf(this.minutos);
