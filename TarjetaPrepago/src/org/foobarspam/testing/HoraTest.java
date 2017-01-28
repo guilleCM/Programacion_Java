@@ -2,6 +2,7 @@ package org.foobarspam.testing;
 
 import static org.junit.Assert.*;
 
+import org.foobarspam.Hora.Hora;
 import org.foobarspam.TarjetaPrepago.*;
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package org.foobarspam.testing;
 
 import static org.junit.Assert.*;
 
-import org.foobarspam.TarjetaPrepago.Dni;
+import org.foobarspam.Dni.Dni;
 import org.junit.Test;
 
 public class DniTest {

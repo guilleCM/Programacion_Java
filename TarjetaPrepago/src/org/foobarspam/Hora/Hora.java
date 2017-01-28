@@ -1,4 +1,4 @@
-package org.foobarspam.TarjetaPrepago;
+package org.foobarspam.Hora;
 
 
 public class Hora {

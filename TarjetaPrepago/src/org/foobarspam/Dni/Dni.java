@@ -1,4 +1,4 @@
-package org.foobarspam.TarjetaPrepago;
+package org.foobarspam.Dni;
 
 public class Dni {
 	
