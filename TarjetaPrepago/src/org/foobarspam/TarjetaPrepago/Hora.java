@@ -1,6 +1,5 @@
 package org.foobarspam.TarjetaPrepago;
 
-import java.util.Arrays;
 
 public class Hora {
 	
@@ -18,12 +17,21 @@ public class Hora {
 		this.hora = hora;
 	}
 	
+	public Hora(int hora, int minutos) {
+		this.hora = hora;
+		this.minutos = minutos;
+	}
+	
+	public Hora(int hora, int minutos, int segundos) {
+		this.hora = hora;
+		this.minutos = minutos;
+		this.segundos = segundos;
+	}
 	
 	public void setHora(int hora, int minutos, int segundos) {
-		int[] constructorHora = Hora.constructorDefensivo(hora, minutos, segundos);
-		this.hora = constructorHora[0];
-		this.minutos = constructorHora[1];
-		this.segundos = constructorHora[2];
+		this.hora = hora;
+		this.minutos = minutos;
+		this.segundos = segundos;
 	}
 	public String imprimirHora() {
 		String hora = String.valueOf(this.hora);
@@ -35,21 +43,7 @@ public class Hora {
 				resultado[i] = "0" + resultado[i];
 			}
 		}
-		String.join(":", resultado);	
-		return Arrays.toString(resultado);
+		return resultado[0]+":"+resultado[1]+":"+resultado[2];
 	}
 	
-	public static int[] constructorDefensivo(int hora, int minutos, int segundos) {
-		int[] horaPorDefecto = {0, 0, 0};
-		if (0 <= hora && hora <= 23) {
-			horaPorDefecto[0] = hora;
-		}
-		if (0 <= minutos && minutos <= 59) {
-			horaPorDefecto[1] = minutos;
-		}
-		if (0 <= segundos && segundos <= 59) {
-			horaPorDefecto[2] = segundos;
-		}
-		return horaPorDefecto;
-	}
 }
