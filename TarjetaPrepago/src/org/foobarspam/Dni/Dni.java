@@ -2,6 +2,7 @@ package org.foobarspam.Dni;
 
 public class Dni {
 	
+	//Constructores
 	private String dni = null;
 	
 	public Dni() {
@@ -12,21 +13,22 @@ public class Dni {
 		this.dni=dni;
 	}
 	
+	//Setters
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	
+	//Getters
 	public String getDni() {
 		return this.dni;
 	}
 	
+	//Metodos
 	public boolean esDniValido() {
-		if (esMedidaDniValida()) {
+		if (esMedidaDniValida())
 			return (sonNumerosValidos() && esLetraValida());
-		}
-		else {
+		else
 			return false;
-		}
 	}
 	
 	public boolean esMedidaDniValida() {
@@ -55,7 +57,7 @@ public class Dni {
 		return true;
 	}
 	
-	public void formatearDni() {
+	public void formatearLetraDni() {
 		String dniValido = getDni();
 		char letraDni = dniValido.charAt(8);
 		String dniFormateado = dniValido.replace(letraDni, Character.toUpperCase(letraDni));

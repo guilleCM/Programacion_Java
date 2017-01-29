@@ -20,6 +20,17 @@ public class HoraTest {
 		assertEquals("00:00:58", inyector.imprimirHora());
 		inyector.setHora(-20, 23333, 23);
 		assertEquals("00:00:23", inyector.imprimirHora());
+		inyector.setMinutos(500);
+		assertEquals("00:00:23", inyector.imprimirHora());
+		inyector.setSegundos(17);
+		assertEquals("00:00:17", inyector.imprimirHora());
 	}
 
+	@Test
+	public void test_getHora() {
+		Hora inyector = new Hora();
+		assertEquals("[0, 0, 0]", inyector.getHora());
+		inyector.setHora(03, 10, 5);
+		assertEquals("[3, 10, 5]", inyector.getHora());
+	}
 }

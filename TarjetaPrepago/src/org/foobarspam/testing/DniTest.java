@@ -60,7 +60,7 @@ public class DniTest {
 	@Test
 	public void test_formatearDni() {
 		primerDni.setDni("43223381x");
-		primerDni.formatearDni();
+		primerDni.formatearLetraDni();
 		assertEquals("43223381X", primerDni.getDni());
 	}	
 
