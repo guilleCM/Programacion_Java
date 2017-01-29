@@ -3,16 +3,12 @@ package org.foobarspam.Yatzy_game;
 import java.util.Arrays;
 
 public class Yatzy {
-	
-	protected int[] dice;
+	//al crear un new Array de integers de 5 posiciones,
+	//por defecto estos tomaran el valor 0 (Beggining Java 8 Fundamentals cap15)
+	protected int[] dice = new int[5];
 	
 	public Yatzy(int d1, int d2, int d3, int d4, int d5) {
-		dice = new int[5];
-		dice[0] = d1;
-		dice[1] = d2;
-		dice[2] = d3;
-		dice[3] = d4;
-		dice[4] = d5;
+		this.dice = new int[] {d1, d2, d3, d4, d5};
 	}
 	
     public static int chance(int... dice) {
