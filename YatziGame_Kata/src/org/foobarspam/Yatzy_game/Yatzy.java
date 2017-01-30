@@ -116,27 +116,25 @@ public class Yatzy {
     }    
     
     public static int three_of_a_kind(int... dice) {
-    	Arrays.sort(dice);
     	int THREE = 3;
-    	int score = 0;
-    	for (int i = dice.length -1; i >= 2; i--) {
-    		if (dice[i] == dice[i - 2]) {
-    			return score += dice[i] * THREE;
+    	for (int n=6; n!=0; n--) {
+    		int counts = ocurrencias_num_en_array(n, dice);
+    		if (counts >= THREE) {
+    			return n * THREE;
     		}
     	}
-    	return score;
+    	return 0;
     }
 
     public static int four_of_a_kind(int... dice) {
-    	Arrays.sort(dice);
     	int FOUR = 4;
-    	int score = 0;
-    	for (int i = dice.length -1; i >= 3; i--) {
-    		if (dice[i] == dice[i - 3]) {
-    			return score += dice[i] * FOUR;
+    	for (int n=6; n!=0; n--) {
+    		int counts = ocurrencias_num_en_array(n, dice);
+    		if (counts >= FOUR) {
+    			return n * FOUR;
     		}
     	}
-    	return score;
+    	return 0;
     }
     
     public static int small_straight(int... dice) {
@@ -162,22 +160,37 @@ public class Yatzy {
     	return score;
     }    
     
-    public static int full_house(int... dice) {
-    	Arrays.sort(dice);
+    public static int full_house(int...dice) {
     	int score = 0;
-    	boolean threeFoundAtBeginOfArray = dice[0] == dice[2];
-    	boolean threeFoundAtEndOfArray = dice[2] == dice[4];
-    	if (threeFoundAtBeginOfArray && dice[3] == dice[4]) {
-    		int pairValue = dice[3] * 2;
-    		int threeValue = dice[0] * 3;
-    		return score = pairValue+threeValue;
+    	boolean pairFound = false;
+    	boolean threeFound = false;
+    	int THREE = 3;
+    	int PAIR = 2;
+    	for (int n=6; n!=0; n--){
+    		int counts = ocurrencias_num_en_array(n, dice);
+    		if (counts == THREE) {
+    			score += n * THREE;
+    			threeFound = true;
+    		} else if (counts == PAIR){
+    			score += n * PAIR;
+    			pairFound = true;
+    		}
     	}
-    	if (threeFoundAtEndOfArray && dice[0] == dice[1]) {
-    		int pairValue = dice[0] * 2;
-    		int threeValue = dice[2] * 3;
-    		return score = pairValue+threeValue;    		
+    	if (pairFound && threeFound) {
+    		return score;
     	}
-    	return score;
+    	return 0;
     }
     
+    //Metodo creado para simular el metodo Array.count(numero) de Python
+    //y asi poder reutilizar el codigo escrito en el Kata en Python
+    public static int ocurrencias_num_en_array(int elemento, int[] lista) {
+    	int ocurrencias = 0;
+    	for (int numero : lista) {
+    		if (numero == elemento) {
+    			ocurrencias++;
+    		}
+    	}
+    	return ocurrencias;
+    }
 }

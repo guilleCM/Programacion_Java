@@ -123,6 +123,20 @@ public class Test_Yatzy {
 		assertEquals(8, Yatzy.full_house(1,1,2,2,2));	
 		assertEquals(16, Yatzy.full_house(5,2,5,2,2));
 		assertEquals(0, Yatzy.full_house(1,2,5,3,4));
+		assertEquals(0, Yatzy.full_house(1,2,2,2,2));
+		assertEquals(0, Yatzy.full_house(5,2,5,3,3));
+		assertEquals(23, Yatzy.full_house(5,4,5,4,5));
+		assertEquals(8, Yatzy.full_house(1,2,2,2,1));
 	}
-    
+	
+	@Test
+	public void test_ocurrencias_num_en_array(){
+		int[] inyector = {1,2,3,5,5};
+		assertEquals(2, Yatzy.ocurrencias_num_en_array(5, inyector));
+		inyector = new int[]{3,3,3,3,3};
+		assertEquals(5, Yatzy.ocurrencias_num_en_array(3, inyector));
+		inyector = new int[]{1,2,2,4,1};
+		assertEquals(2, Yatzy.ocurrencias_num_en_array(1, inyector));
+	}     
+
 }
