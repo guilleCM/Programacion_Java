@@ -89,15 +89,14 @@ public class Yatzy {
     }
     
     public static int score_pair(int... dice) {
-    	Arrays.sort(dice);
     	int PAIR = 2;
-    	int score = 0;
-    	for (int i = dice.length -1; i > 0; i--) {
-    		if (dice[i] == dice[i - 1]) {
-    			return score = dice[i] * PAIR;
+    	for (int n=6; n!=0; n--) {
+    		int counts = ocurrencias_num_en_array(n, dice);
+    		if (counts >= PAIR) {
+    			return n * PAIR;
     		}
     	}
-    	return score;
+    	return 0;
     }
 
     public static int two_pair(int... dice) {
