@@ -19,28 +19,20 @@ public class PuntoDeSillaTest {
 	}
 	
 	@Test
-	public void testImprimirFila() {
-		int [][] matrizSimple = {{1,1,1},
-				 				{2,1,1},
-				 				{3,1,1},
-			   					};
-		Matriz prueba= new Matriz(matrizSimple);
-		assertEquals("[2, 1, 1]", prueba.imprimirFila(matrizSimple[1]));
-	}
-	
-	@Test
 	public void testSacarfila() {
 		int [][] matrizSimple = {{1,1,1},
  								 {2,1,1},
  								 {3,1,1},
-					};
+								};
+		
 		Matriz prueba= new Matriz(matrizSimple);
-		int[] filaSacada = prueba.sacarFila(1);
-		assertEquals("[2, 1, 1]", prueba.imprimirFila(filaSacada));
-		filaSacada = prueba.sacarFila(0);
-		assertEquals("[1, 1, 1]", prueba.imprimirFila(filaSacada));
-		filaSacada = prueba.sacarFila(2);
-		assertEquals("[3, 1, 1]", prueba.imprimirFila(filaSacada));
+		
+		int[] filaEsperada = {2,1,1};
+		assertArrayEquals(filaEsperada, prueba.sacarFila(1));
+		filaEsperada = new int[]{1,1,1};
+		assertArrayEquals(filaEsperada, prueba.sacarFila(0));
+		filaEsperada = new int[]{3,1,1};
+		assertArrayEquals(filaEsperada, prueba.sacarFila(2));
 	}
 	
 	@Test
@@ -49,11 +41,13 @@ public class PuntoDeSillaTest {
 								 {2,3,1},
 								 {3,1,1},
 								};
+		
 		Matriz prueba = new Matriz(matrizSimple);
-		int[] columnaSacada = prueba.sacarColumna(0);
-		assertEquals("[1, 2, 3]", prueba.imprimirFila(columnaSacada));
-		columnaSacada = prueba.sacarColumna(1);
-		assertEquals("[1, 3, 1]", prueba.imprimirFila(columnaSacada));
+		
+		int[] columnaEsperada = {1,2,3};
+		assertArrayEquals(columnaEsperada, prueba.sacarColumna(0));
+		columnaEsperada = new int[]{1,3,1};
+		assertArrayEquals(columnaEsperada, prueba.sacarColumna(1));
 	}
 	
 	@Test
@@ -63,9 +57,14 @@ public class PuntoDeSillaTest {
 								 {3,1,1},
 								};
 		Matriz prueba = new Matriz(matrizSimple);
+		
 		int[] fila = prueba.sacarFila(1);
+		
 		assertEquals(true, prueba.menorValorFila(1, fila));
 		assertEquals(false, prueba.menorValorFila(3, fila));
+		//todos los valores de la fila iguales (1,1,1)
+		fila = prueba.sacarFila(0);
+		assertEquals(true, prueba.menorValorFila(1, fila));
 	}
 	
 	@Test
@@ -75,23 +74,29 @@ public class PuntoDeSillaTest {
 								 {3,1,1},
 								};
 		Matriz prueba = new Matriz(matrizSimple);
+		
 		int[] columna = prueba.sacarColumna(0);
-		int num = 3;
-		assertEquals(true, prueba.mayorValorColumna(num, columna));
+		assertEquals(true, prueba.mayorValorColumna(3, columna));
 		assertEquals(false, prueba.mayorValorColumna(2, columna));
+		//sacamos la columna 2 ==> {1,1,1} donde todos los valores son iguales
+		columna = prueba.sacarColumna(2);
+		assertEquals(true, prueba.mayorValorColumna(1, columna));
 	}
 	
-//	@Test
-//	public void testPuntoDeSilla() {
-//		int[][] matrizSimple = { {1,3,4},
-//								 {2,3,1},
-//								 {3,4,5},
-//								};
-//		int[] posicion = {2,0};
-//		Matriz prueba = new Matriz(matrizSimple);
-//		assertEquals(3, prueba.puntoDeSilla());
-//		assertArrayEquals(posicion, prueba.getPuntoDeSilla());
-//	}
+	@Test
+	public void testPuntoDeSilla() {
+		int[][] matrizSimple = { {1,3,4},
+								 {2,3,1},
+								 {3,4,5},
+								};
+		
+		Matriz prueba = new Matriz(matrizSimple);
+		int[] posicionEsperada = {2,0};
+		prueba.puntoDeSilla();
+		assertArrayEquals(posicionEsperada, prueba.getPuntoDeSilla());
+		String mensajeEsperado = "Se ha encontrado en el punto: [2, 0] con valor de: 3";
+		assertEquals(mensajeEsperado, prueba.imprimirPuntoDeSilla());
+	}
 	
 	@Test
 	public void testPuntoDeSillaTodosNumIguales() {
@@ -101,7 +106,6 @@ public class PuntoDeSillaTest {
 								};
 		int[] posicion = {-1,-1};
 		Matriz prueba = new Matriz(matrizSimple);
-//		assertEquals(8, prueba.puntoDeSilla());
 		assertArrayEquals(posicion, prueba.getPuntoDeSilla());
 		String esperado = "No se ha encontrado punto de silla";
 		assertEquals(esperado, prueba.imprimirPuntoDeSilla());

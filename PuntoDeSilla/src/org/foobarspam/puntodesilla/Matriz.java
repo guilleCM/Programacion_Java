@@ -4,10 +4,11 @@ import java.util.Arrays;
 
 public class Matriz {
 	
-	int[][] matriz = {{}};
+	private int[][] matriz = {{}};
 	// Por defecto, si no se encuentra el punto o hay más
 	// de uno, devolverá {-1,-1}
-	int[] puntoDeSilla = {-1,-1};
+	private int[] puntoDeSilla = {-1,-1};
+	private int valorPuntoDeSilla = 0;
 	
 	public Matriz() {
 	}
@@ -17,9 +18,13 @@ public class Matriz {
 	}
 	
 	//setter
-	public void setPuntoDeSilla(int posicionFila, int posicionColumna) {
+	private void setPuntoDeSilla(int posicionFila, int posicionColumna) {
 		this.puntoDeSilla[0]=posicionFila;
 		this.puntoDeSilla[1]=posicionColumna;
+	}
+	
+	private void setValorPuntoDeSilla(int valor) {
+		this.valorPuntoDeSilla = valor;
 	}
 	
 	//getters
@@ -29,6 +34,10 @@ public class Matriz {
 	
 	public int[] getPuntoDeSilla() {
 		return this.puntoDeSilla;
+	}
+	
+	public int getValorPuntoDeSilla() {
+		return this.valorPuntoDeSilla;
 	}
 	
 	//métodos
@@ -75,19 +84,15 @@ public class Matriz {
 		return (valor==numeroCheckear);
 	}
 	
-	public String imprimirFila(int[] fila){
-		return Arrays.toString(fila);
-	}
 	public void puntoDeSilla() {
-		int puntoDeSilla=0;
 		int[][] matriz = getMatriz();
 		int puntosEncontrados = 0;
 		int j=0;
-		for (int[] fila: matriz) {
+		for (int[] fila : matriz) {
 			int i=0;
 			for (int numero : fila) {
-				if (menorValorFila(numero, fila) && mayorValorColumna(numero,sacarColumna(i))) {
-					puntoDeSilla=numero;
+				if (menorValorFila(numero, fila) && mayorValorColumna(numero,sacarColumna(i))){
+					setValorPuntoDeSilla(numero);
 					setPuntoDeSilla(j, i);
 					puntosEncontrados +=1;
 				}
@@ -98,15 +103,18 @@ public class Matriz {
 		if (puntosEncontrados > 1){
 			setPuntoDeSilla(-1,-1);
 		}
-		
 	}
 	
 	public String imprimirPuntoDeSilla() {
-		int[] fallo = {-1,-1};
-		if (Arrays.equals(getPuntoDeSilla(), fallo)) {
+		int[] noEncontrado = {-1,-1};
+		if (Arrays.equals(getPuntoDeSilla(), noEncontrado)) {
 			return ("No se ha encontrado punto de silla");
 		} else {
-			return ("Se ha encontrado en el punto: " + Arrays.toString(getPuntoDeSilla()) );
+			return ("Se ha encontrado en el punto: " + 
+					Arrays.toString(getPuntoDeSilla()) + 
+					" con valor de: " + getValorPuntoDeSilla()
+			);
 		}
 	}
+	
 }
