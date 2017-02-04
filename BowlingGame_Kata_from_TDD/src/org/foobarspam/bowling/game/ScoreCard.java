@@ -1,7 +1,5 @@
 package org.foobarspam.bowling.game;
 
-import java.util.Arrays;
-
 public class ScoreCard {
 	//propiedades
 	private String scoreCard = "";
@@ -18,7 +16,7 @@ public class ScoreCard {
 	
 	//setters	
 	private void setTotalScore(int total) {
-		this.totalScore = total;
+		this.totalScore += total;
 	}
 	
 	//getters
@@ -29,51 +27,55 @@ public class ScoreCard {
 	public int getTotalScore() {
 		return this.totalScore;
 	}
-	
+		
 	//metodos
-	public void calculateScore(){
-		int[] framesCard = scoreCardToIntArray();
-		for (int roll = 0; roll<framesCard.length; roll++) {
-			if (framesCard[roll] == 11) {
-				framesCard[roll-1] = 0;
-				framesCard[roll] = 10 + framesCard[roll+1];
-				roll++;
+	//cambiamos la estructura de datos de String a Array de integers
+	//permite operaciones con menos complejidad de codigo	
+	public int[] scoreCardToArray(){
+		int[] scoreCardArray = new int[21];
+		for (int roll = 0; roll<getScoreCard().length(); roll++){
+			// Si no es spare
+			int pinsDown = getSymbolValue(getScoreCard().charAt(roll));
+			if (pinsDown != 11){
+				scoreCardArray[roll] = pinsDown;
+			} else{ // Si es spare
+				// Nunca dará error ya que el spare no puede
+				// encontrarse en la primera tirada
+				scoreCardArray[roll] = 10 - scoreCardArray[roll-1];
 			}
 		}
-		int total = 0;
-		for (int i = 0; i<framesCard.length;i++) {
-			total+=framesCard[i];
-		}
-		setTotalScore(total);
+		return scoreCardArray;
 	}
 	
-	//roll es la logica para actuar sobre setter de la propiedad totalScore
-	public int[] scoreCardToIntArray() {
-		int[] framesPoints = new int[21];
-		for(int i=0; i < getScoreCard().length(); i++){
-			char pin = getScoreCard().charAt(i);
-			framesPoints[i] = getSymbolValue(pin);
+	public void calculateScore(){
+		int[] scorecard = scoreCardToArray();
+		int pointer = 0;
+		for (int frame = 0; frame < 10; frame++){
+			if (isStrike(pointer, scorecard)){
+				setTotalScore(scorecard[pointer] + scorecard[pointer + 1] 
+								+ scorecard[pointer + 2]);
+				pointer += 1;
+			} else if (isSpare(pointer, scorecard)){
+				setTotalScore(10 + scorecard[pointer + 2]);
+				pointer += 2;
+			} else {
+				setTotalScore(scorecard[pointer] + scorecard[pointer+1]);
+				pointer += 2;
+			}
 		}
-		return framesPoints;
+	}
+
+	// Métodos que nos indican si la tirada es Spare o Strike
+	public Boolean isSpare(int pointer, int[] intCard){
+		return 10 == intCard[pointer] + intCard[pointer + 1];
+	}
+
+	public Boolean isStrike(int pointer, int[] intCard){
+		return 10 == intCard[pointer];
 	}
 	
-	private int getSumOfRolls(int[] scoreCardArray) {
-		int total = 0;
-		scoreCardArray = scoreCardToIntArray();
-		for (int roll : scoreCardArray) {
-			total += roll;
-		}
-		return total;
-	}
-	
-	public int getSymbolValue(char symbol) {
+	private int getSymbolValue(char symbol) {
 		return symbols.indexOf(symbol);
-		}
-	
-	//solo para testear el resultado de scoreCardtIntArray();
-	public String imprimirScoreCardArray() {
-		int[] card = scoreCardToIntArray();
-		return Arrays.toString(card);
 	}
 	
 }

@@ -2,56 +2,83 @@ package org.foobarspam.bowling.testing;
 
 import static org.junit.Assert.*;
 import org.foobarspam.bowling.game.ScoreCard;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ScoreCardTest {
 	
+	String pins;
+	ScoreCard game;
+	
 	@Test
-	public void TotalScoreHittingPins(){		
-		// Hitting pins total = 60
-		String pins = "12345123451234512345";
-		int total = 60;		
-		ScoreCard scoreCard = new ScoreCard(pins);
-		scoreCard.calculateScore();;
-		assertEquals(total, scoreCard.getTotalScore());			
-	}
+	public void testScoreCardToIntArray() {
+		
+		pins = "12345123451234512345";
+		game = new ScoreCard(pins);
+		int[] arrayExpected = {1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,0};
+		assertArrayEquals(arrayExpected, game.scoreCardToArray());
+		
+		pins = "9-9-9-9-9-9-9-9-9-9-";
+		game = new ScoreCard(pins);
+		arrayExpected = new int[]{9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,9,0,0};
+		assertArrayEquals(arrayExpected, game.scoreCardToArray());
 
-	@Test
-	public void TotalScoreHittingPinsFail(){
-		// test symbol -
-		String pins = "9-9-9-9-9-9-9-9-9-9-";
-		int total = 90;		
-		ScoreCard scoreCard = new ScoreCard(pins);	
-		scoreCard.calculateScore();
-		assertEquals(total, scoreCard.getTotalScore());		
-		pins = "9-3561368153258-7181";         
-		total = 82;
-		scoreCard = new ScoreCard(pins);
-		scoreCard.calculateScore();
-		assertEquals(total, scoreCard.getTotalScore());
+		
+		pins = "5/5/5/5/5/5/5/5/5/5/5";
+		game = new ScoreCard(pins);
+		arrayExpected = new int[]{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5};
+		assertArrayEquals(arrayExpected, game.scoreCardToArray());
+		
+		pins = "XXXXXXXXXXXX";
+		game = new ScoreCard(pins);
+		arrayExpected = new int[]{10,10,10,10,10,10,10,10,10,10,10,10,0,0,0,0,0,0,0,0,0};
+		assertArrayEquals(arrayExpected, game.scoreCardToArray());
+		
+		pins = "-1-1XX-/--X111111";
+		game = new ScoreCard(pins);
+		arrayExpected = new int[]{0,1,0,1,10,10,0,10,0,0,10,1,1,1,1,1,1,0,0,0,0};
+		assertArrayEquals(arrayExpected, game.scoreCardToArray());	
 	}
 	
 	@Test
-	public void TotalScoreSpare(){
-		String pins = "5/5/5/5/5/5/5/5/5/5/5";
-		int total = 150;	
-		ScoreCard scoreCard = new ScoreCard(pins);
-		scoreCard.calculateScore();		
-		assertEquals(total, scoreCard.getTotalScore());	
-		pins = "9-3/613/815/-/8-7/8/8";    
-		total = 131;
-		scoreCard = new ScoreCard(pins);		
-		scoreCard.calculateScore();		
-		assertEquals(total, scoreCard.getTotalScore());
+	public void testCalculateScore() {
+
+		pins = "12345123451234512345";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(60, game.getTotalScore());
+		
+		pins = "9-9-9-9-9-9-9-9-9-9-";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(90, game.getTotalScore());	
+
+		pins = "5/5/5/5/5/5/5/5/5/5/5";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(150, game.getTotalScore());
+	
+		pins = "XXXXXXXXXXXX";
+		game = new ScoreCard(pins);
+		game.calculateScore();		
+		assertEquals(300, game.getTotalScore());
+		
+		pins = "XXX247/X--234/X-";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(139, game.getTotalScore());
+		
+
+		pins = "-1-1XX-/--X111111";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(70, game.getTotalScore());
+
+		pins = "XX5/5/----12121/1/X";
+		game = new ScoreCard(pins);
+		game.calculateScore();
+		assertEquals(107, game.getTotalScore());
+
 	}
-	/*
-	@Test
-	public void PerfectGameScore() {
-		String pins = "XXXXXXXXXXXX";
-		int total = 300;
-		ScoreCard scoreCard = new ScoreCard(pins);
-		scoreCard.calculateScore();
-		assertEquals(total, scoreCard.getTotalScore());
-	}
-	*/
+	
 }
