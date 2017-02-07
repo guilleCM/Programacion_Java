@@ -1,8 +1,10 @@
 package org.foobarspam.appbicipalma.estacion;
 
-import java.util.ArrayList;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.foobarspam.appbicipalma.bicicleta.Bicicleta;
+import org.foobarspam.appbicipalma.tarjetausuario.TarjetaUsuario;
 
 public class Estacion {
 	
@@ -11,7 +13,7 @@ public class Estacion {
 	//-1 para saber cuando no se ha construido correctamente el objeto
 	private String direccion = "";
 	private int numeroAnclajes = 0;
-	private int[] anclajes = new int[0];
+	private Bicicleta[] anclajes = new Bicicleta[0];
 	
 	//constructores
 	public Estacion() {
@@ -22,12 +24,12 @@ public class Estacion {
 		this.id = id;
 		this.direccion = direccion;
 		this.numeroAnclajes = anclaje;
-		this.anclajes = new int[anclaje];
+		this.anclajes = new Bicicleta[anclaje];
 	}
 	
 	//setters
-	public void setAnclaje(int id, int posicion) {
-		this.anclajes[posicion] = id;
+	public void setAnclajes(Bicicleta bicicleta, int posicion) {
+		this.anclajes[posicion] = bicicleta;
 	}
 	//getters
 	public int getId() {
@@ -42,46 +44,100 @@ public class Estacion {
 		return this.numeroAnclajes;
 	}
 	
-	public int[] getAnclajes() {
+	public Bicicleta[] getAnclajes() {
 		return this.anclajes;
 	}
 	
 	//metodos
-	public String consultarEstacion() {
+	public void consultarEstacion() {
 		String mensaje = "id: "+ getId() +"\n"+
 						 "direccion: " + getDireccion() +"\n"+
 						 "numeroAnclajes: " + getNumeroAnclajes() +"\n";
-		return mensaje;
+		imprimirPorPantalla(mensaje);
 	}
 	
 	public int anclajesLibres() {
-		int LIBRE = 0;
 		int anclajesLibres = 0;
-		for (int anclaje : getAnclajes()) {
-			if (anclaje == LIBRE) {
+		for (Bicicleta anclaje : getAnclajes()) {
+			if (anclaje == null) {
 				anclajesLibres += 1;
 			}
 		}
 		return anclajesLibres;
 	}
 	
-	public String anclarBicicleta(Bicicleta bicicleta) {
-		int id = bicicleta.getId();
-		int LIBRE = 0;
+	public void anclarBicicleta(Bicicleta bicicleta) {
 		for (int anclaje = 0; anclaje < getAnclajes().length; anclaje++) {
-			if (getAnclajes()[anclaje] == LIBRE) {
-				setAnclaje(id, anclaje);
-				return bicicletaAnclada(id, anclaje+1);
+			if (getAnclajes()[anclaje] == null) {
+				setAnclajes(bicicleta, anclaje);
+				imprimirPorPantalla(mostrarAnclaje(bicicleta.getId(), anclaje+1));
+				return;
 			}
 		}
-		return anclajesLlenos();
+		imprimirPorPantalla(mostrarAnclaje(bicicleta.getId(), -1));
 	}
 	
-	public String bicicletaAnclada(int id, int posicionAnclada) {
-		return "bicicleta: " +id+ " anclada en el anclaje: " +posicionAnclada;
+	public String mostrarAnclaje(int id, int numeroAnclaje) {
+		if (numeroAnclaje==-1) {
+			return "No quedan anclajes libres\n"
+					+ "No se ha podido anclar la bicicleta" +id;
+		}
+		return "bicicleta: " +id+ " anclada en el anclaje: " +numeroAnclaje;
 	}
 	
-	public String anclajesLlenos() {
-		return "No quedan anclajes libres\nNo se ha podido anclar la bicicleta";
+	public void consultarAnclajes() {
+		String mensaje = "";
+		int anclaje = 1;
+		for (Bicicleta bicicleta : getAnclajes()) {
+			mensaje+=formatearAnclajes(anclaje, bicicleta);
+			anclaje += 1;
+		}
+		imprimirPorPantalla(mensaje);
+	}
+	
+	public String formatearAnclajes(int anclaje, Bicicleta bicicleta) {
+		String mensaje = "Anclaje " + anclaje + " ";
+		if (bicicleta == null) {
+			return mensaje +=" libre\n";
+		} else {
+		return mensaje += bicicleta.getId()+"\n";
+		}
+	}
+	
+	public String leerTarjetaUsuario(TarjetaUsuario tarjeta) {
+		String estado = "false";
+		if (tarjeta.estaActivada()) {
+			estado = "true";
+		}
+		return estado;
+	}
+	
+	public void retirarBicicleta(TarjetaUsuario tarjeta) {
+		if (!tarjeta.estaActivada()) {
+			System.out.println("Su tarjeta esta desactivada"
+					+ "\nPor favor, actívela");
+			return;
+		}
+		int anclajeGenerado = generarAnclaje();
+		int bicicletaRetirada = getAnclajes()[anclajeGenerado].getId();
+		setAnclajes(null, anclajeGenerado);
+		String mensaje = "bicicleta retirada: "+bicicletaRetirada+" del anclaje: "+(anclajeGenerado+1);
+		imprimirPorPantalla(mensaje);
+	}
+	
+	public String mostrarBicicleta(Bicicleta bicicleta, int numeroAnclaje) {
+		return "bicicleta retirada: "+bicicleta.getId()+ " del anclaje: "+(numeroAnclaje+1);
+	}
+	
+	public int generarAnclaje() {
+		int anclaje = ThreadLocalRandom.current().nextInt(1, getAnclajes().length);
+		while(getAnclajes()[anclaje] == null){
+			anclaje = ThreadLocalRandom.current().nextInt(getAnclajes().length);
+		}
+		return anclaje;
+	}
+	
+	public void imprimirPorPantalla(String mensaje) {
+		System.out.println(mensaje);
 	}
 }

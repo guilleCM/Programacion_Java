@@ -2,6 +2,7 @@ package org.foobarspam.appbicipalma.bicipalma;
 
 import org.foobarspam.appbicipalma.bicicleta.Bicicleta;
 import org.foobarspam.appbicipalma.estacion.Estacion;
+import org.foobarspam.appbicipalma.tarjetausuario.TarjetaUsuario;
 
 public class BiciPalma {
 	
