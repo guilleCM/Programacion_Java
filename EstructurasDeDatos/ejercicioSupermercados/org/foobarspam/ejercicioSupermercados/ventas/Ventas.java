@@ -1,5 +1,7 @@
 package org.foobarspam.ejercicioSupermercados.ventas;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.foobarspam.ejercicioSupermercados.supermercado.Supermercado;
 
 public class Ventas {	
@@ -11,7 +13,10 @@ public class Ventas {
 		//valores que implementaremos a los objetos supermercado
 		String[] nombres = {"Mercadona", "Lidl", "Dia", "Eroski", "Aldi"};
 		double[] recaudaciones = {50000000, 40000000, 30000000, 20000000, 10000000};
-//		double[]
+		recaudaciones = new double[5];
+		for (int i = 0; i<recaudaciones.length;i++) {
+			recaudaciones[i] = ThreadLocalRandom.current().nextDouble(10);
+		}
 		//crear objetos supermercado y meteros en el array de arriba
 		for (int i = 0; i<supermercados.length; i++) {
 			supermercados[i] = new Supermercado(nombres[i], recaudaciones[i]);
@@ -20,6 +25,10 @@ public class Ventas {
 		for (int i = 0; i<supermercados.length; i++) {
 			ventas[i] = supermercados[i].getRecaudacionAnual();
 		}
+		
+		//probando el metodo clonar arrays
+		String[] clonarNombres;
+		clonarNombres = (String[])nombres.clone();
 		
 		//imprimir por pantalla los resultados
 		
