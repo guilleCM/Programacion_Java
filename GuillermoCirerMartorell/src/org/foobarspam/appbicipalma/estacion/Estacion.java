@@ -27,10 +27,6 @@ public class Estacion {
 		this.anclajes = new Bicicleta[anclaje];
 	}
 	
-	//setters
-	public void setAnclajes(Bicicleta bicicleta, int posicion) {
-		this.anclajes[posicion] = bicicleta;
-	}
 	//getters
 	public int getId() {
 		return this.id;
@@ -69,7 +65,7 @@ public class Estacion {
 	public void anclarBicicleta(Bicicleta bicicleta) {
 		for (int anclaje = 0; anclaje < getAnclajes().length; anclaje++) {
 			if (getAnclajes()[anclaje] == null) {
-				setAnclajes(bicicleta, anclaje);
+				setAnclaje(bicicleta, anclaje);
 				imprimirPorPantalla(mostrarAnclaje(bicicleta.getId(), anclaje+1));
 				return;
 			}
@@ -77,7 +73,7 @@ public class Estacion {
 		imprimirPorPantalla(mostrarAnclaje(bicicleta.getId(), -1));
 	}
 	
-	public String mostrarAnclaje(int id, int numeroAnclaje) {
+	private String mostrarAnclaje(int id, int numeroAnclaje) {
 		if (numeroAnclaje==-1) {
 			return "No quedan anclajes libres\n"
 					+ "No se ha podido anclar la bicicleta" +id;
@@ -89,13 +85,13 @@ public class Estacion {
 		String mensaje = "";
 		int anclaje = 1;
 		for (Bicicleta bicicleta : getAnclajes()) {
-			mensaje+=formatearAnclajes(anclaje, bicicleta);
+			mensaje+=formatearMensajeAnclajes(anclaje, bicicleta);
 			anclaje += 1;
 		}
 		imprimirPorPantalla(mensaje);
 	}
 	
-	public String formatearAnclajes(int anclaje, Bicicleta bicicleta) {
+	private String formatearMensajeAnclajes(int anclaje, Bicicleta bicicleta) {
 		String mensaje = "Anclaje " + anclaje + " ";
 		if (bicicleta == null) {
 			return mensaje +=" libre\n";
@@ -114,27 +110,47 @@ public class Estacion {
 	
 	public void retirarBicicleta(TarjetaUsuario tarjeta) {
 		if (!tarjeta.estaActivada()) {
-			System.out.println("Su tarjeta esta desactivada"
-					+ "\nPor favor, actívela");
+			imprimirPorPantalla("Su tarjeta esta desactivada"
+							 + "\nPor favor, actívela");
 			return;
 		}
 		int anclajeGenerado = generarAnclaje();
-		int bicicletaRetirada = getAnclajes()[anclajeGenerado].getId();
-		setAnclajes(null, anclajeGenerado);
-		String mensaje = "bicicleta retirada: "+bicicletaRetirada+" del anclaje: "+(anclajeGenerado+1);
-		imprimirPorPantalla(mensaje);
+		if (anclajeGenerado == -1) {
+			imprimirPorPantalla("No quedan bicicletas disponibles");
+			return;
+		}
+		mostrarBicicleta(getAnclajes()[anclajeGenerado], anclajeGenerado);
+		setAnclaje(null, anclajeGenerado);
 	}
 	
-	public String mostrarBicicleta(Bicicleta bicicleta, int numeroAnclaje) {
-		return "bicicleta retirada: "+bicicleta.getId()+ " del anclaje: "+(numeroAnclaje+1);
+	private void mostrarBicicleta(Bicicleta bicicleta, int numeroAnclaje) {
+		imprimirPorPantalla("bicicleta retirada: "+bicicleta.getId()+ " del anclaje: "+(numeroAnclaje+1));
 	}
 	
-	public int generarAnclaje() {
-		int anclaje = ThreadLocalRandom.current().nextInt(1, getAnclajes().length);
-		while(getAnclajes()[anclaje] == null){
-			anclaje = ThreadLocalRandom.current().nextInt(getAnclajes().length);
+	private int generarAnclaje() {
+		int anclaje = -1;
+		if (hayBicicletas()) {
+			anclaje = ThreadLocalRandom.current().nextInt(1, getAnclajes().length);
+			while(getAnclajes()[anclaje] == null){
+				anclaje = ThreadLocalRandom.current().nextInt(getAnclajes().length);
+			}
+			return anclaje;
 		}
 		return anclaje;
+	}
+	
+	//metodos auxiliares
+	private void setAnclaje(Bicicleta bicicleta, int posicion) {
+		getAnclajes()[posicion] = bicicleta;
+	}
+	
+	private boolean hayBicicletas() {
+		for (Bicicleta bicicleta : getAnclajes()) {
+			if (bicicleta != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void imprimirPorPantalla(String mensaje) {
