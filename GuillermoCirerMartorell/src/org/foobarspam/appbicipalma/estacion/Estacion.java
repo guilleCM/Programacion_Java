@@ -130,7 +130,7 @@ public class Estacion {
 	private int generarAnclaje() {
 		int anclaje = -1;
 		if (hayBicicletas()) {
-			anclaje = ThreadLocalRandom.current().nextInt(1, getAnclajes().length);
+			anclaje = ThreadLocalRandom.current().nextInt(getAnclajes().length);
 			while(getAnclajes()[anclaje] == null){
 				anclaje = ThreadLocalRandom.current().nextInt(getAnclajes().length);
 			}
