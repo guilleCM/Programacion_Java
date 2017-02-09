@@ -64,12 +64,12 @@ public class EstacionTest {
 		estacion.anclarBicicleta(bicicleta2);
 		estacion.anclarBicicleta(bicicleta3);
 		estacion.anclarBicicleta(bicicleta4);
-//		SE ESPERA   Anclaje 1 291
-//					Anclaje 2 292
-//					Anclaje 3 293
-//					Anclaje 4 294
-//					Anclaje 5  libre
-//					Anclaje 6  libre
+		//SE ESPERA   Anclaje 1 291
+		//			  Anclaje 2 292
+		//			  Anclaje 3 293
+		//			  Anclaje 4 294
+		//			  Anclaje 5  libre
+		//			  Anclaje 6  libre
 		estacion.consultarAnclajes();
 	}
 	
