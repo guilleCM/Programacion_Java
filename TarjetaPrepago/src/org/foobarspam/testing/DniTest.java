@@ -14,12 +14,11 @@ public class DniTest {
 		primerDni.setDni("43223381X");
 		assertEquals("43223381X", primerDni.getDni());
 		Dni segundoDni = new Dni();
-		assertEquals("desconocido", segundoDni.getDni());
+		assertEquals(null, segundoDni.getDni());
 	}
 	
 	@Test
 	public void test_esMedidaValida() {
-		assertEquals(false, primerDni.esMedidaDniValida());
 		primerDni.setDni("43223381X");
 		assertEquals(true, primerDni.esMedidaDniValida());
 		primerDni.setDni("");
@@ -44,7 +43,6 @@ public class DniTest {
 	
 	@Test
 	public void test_esDniValido() {
-		assertEquals(false, primerDni.esDniValido());
 		primerDni.setDni("43123");
 		assertEquals(false, primerDni.esDniValido());
 		primerDni.setDni("qwertyuio");
@@ -62,6 +60,8 @@ public class DniTest {
 		primerDni.setDni("43223381x");
 		primerDni.formatearLetraDni();
 		assertEquals("43223381X", primerDni.getDni());
+		primerDni.setDni("43223381Y");
+		assertEquals("43223381Y", primerDni.getDni());
 	}	
 
 }

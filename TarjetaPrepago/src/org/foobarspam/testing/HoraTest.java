@@ -29,8 +29,10 @@ public class HoraTest {
 	@Test
 	public void test_getHora() {
 		Hora inyector = new Hora();
-		assertEquals("[0, 0, 0]", inyector.getHora());
+		int[] esperado = {0, 0, 0};
+		assertArrayEquals(esperado, inyector.getHora());
 		inyector.setHora(03, 10, 5);
-		assertEquals("[3, 10, 5]", inyector.getHora());
+		esperado = new int[]{3, 10, 5};
+		assertArrayEquals(esperado, inyector.getHora());
 	}
 }

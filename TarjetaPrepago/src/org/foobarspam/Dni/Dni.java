@@ -1,12 +1,16 @@
 package org.foobarspam.Dni;
+import java.util.Scanner;
 
 public class Dni {
 	
-	//Constructores
+	//propiedades
 	private String dni = null;
 	
+	// Composición (agregación) "Has - a" / "Tiene - un"
+	private TablaAsignacion tabla = new TablaAsignacion();
+
+	//constructores
 	public Dni() {
-		this.dni = "desconocido";
 	}
 	
 	public Dni(String dni) {

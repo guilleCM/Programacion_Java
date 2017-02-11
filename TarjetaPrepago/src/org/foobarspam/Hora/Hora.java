@@ -1,7 +1,5 @@
 package org.foobarspam.Hora;
 
-import java.util.Arrays;
-
 public class Hora {
 	
 	//Constructores
@@ -61,9 +59,9 @@ public class Hora {
     }
     
     //Getters
-    public String getHora() {
+    public int[] getHora() {
     	int[] horaToList = {this.hora, this.minutos, this.segundos};
-    	return Arrays.toString(horaToList);
+    	return horaToList;
     }
     
     public int getMinutos() {
