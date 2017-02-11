@@ -1,71 +1,125 @@
 package org.foobarspam.Dni;
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Dni {
-	
-	//propiedades
-	private String dni = null;
-	
+
+	private String dni  = null;
+	private Boolean numeroSano = false;
+	private Boolean letraSana 	= false;
+	private Boolean dniCifSano  = false;
 	// Composición (agregación) "Has - a" / "Tiene - un"
 	private TablaAsignacion tabla = new TablaAsignacion();
 
-	//constructores
+	/* Constructores */
 	public Dni() {
+		this.dni = "desconocido";
 	}
 	
 	public Dni(String dni) {
-		this.dni=dni;
-	}
-	
-	//Setters
-	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	
-	//Getters
-	public String getDni() {
+	/* Encapsulacion */
+	
+	public void setDni(String cadena){
+		this.dni = cadena;
+	}
+
+	public String getDni(){
 		return this.dni;
 	}
-	
-	//Metodos
-	public boolean esDniValido() {
-		if (esMedidaDniValida())
-			return (sonNumerosValidos() && esLetraValida());
-		else
-			return false;
+
+	private void setNumeroSano(Boolean valor){
+		this.numeroSano = valor;
 	}
 	
-	public boolean esMedidaDniValida() {
-		int MEDIDA = 9;
-		if (getDni().length() != MEDIDA ) {
+	public Boolean getNumeroSano(){
+		return this.numeroSano;
+	}
+	
+	private void setLetraSana(Boolean valor){
+		this.letraSana = valor;
+	}
+
+	public Boolean getLetraSana(){
+		return this.letraSana;
+	}
+	
+	public void setDniCifSano(Boolean valor){
+		this.dniCifSano = valor;
+	}
+	
+	public Boolean getDniCifSano(){
+		return this.dniCifSano;
+	}
+	/*
+	 * Lógica 
+	 */
+
+	/* Interfaz Pública */
+	
+	public Boolean checkCIF(){
+		setDniCifSano( checkDni() && checkLetra() );
+		return getDniCifSano();
+	}
+	
+	public Boolean checkDni(){
+		setNumeroSano( checkLongitud() && stringEsNumero( getParteNumericaDni() ) );
+		return getNumeroSano();
+	}
+	
+	public Boolean checkLetra(){
+		if (getNumeroSano() ) {
+			setLetraSana ( Character.isUpperCase(getParteAlfabeticaDni()) && checkLetraValida() );
+			return getLetraSana();
+		}
+		else {
 			return false;
 		}
-		return true;
+	}
+					
+	public Character obtenerLetra() throws IOException{
+		// calcularLetra no puede ejecutarse si antes no se cumplen las condiciones previas en checkDni
+		// y checkletra
+		if ( getNumeroSano() ){
+			return this.tabla.calcularLetra( getParteNumericaDni() );
+		}
+		else {
+			return ' ';
+		}
+	}
+
+
+	public Boolean checkLongitud() {
+		return getDni().length() == 9;
 	}
 	
-	public boolean sonNumerosValidos() {
-		for(int i = 0; i < getDni().length()-1; i++ ){
-			if ( ! Character.isDigit(getDni().charAt(i)) ){
+	public Boolean stringEsNumero(String cadena){
+		for( int i=0; i < cadena.length(); i++ ){
+			if ( ! Character.isDigit(cadena.charAt(i)) ){
 				return false;
 			}
 			else;
 		}
 		return true;
+	}		
+		
+	public String getParteNumericaDni() {
+		return (String) dni.substring(0, dni.length() - 1);
 	}
 	
-	public boolean esLetraValida() {
-		char letraDni = getDni().charAt(8);
-		if ( ! Character.isLetter(letraDni)) {
+	public Character getParteAlfabeticaDni() {
+		return dni.charAt(dni.length() - 1);
+	}
+	
+	public Boolean checkLetraValida() {
+		try {
+			return getParteAlfabeticaDni() == obtenerLetra();
+		}
+		catch(IOException ioexcepcion){
 			return false;
 		}
-		return true;
-	}
-	
-	public void formatearLetraDni() {
-		String dniValido = getDni();
-		char letraDni = dniValido.charAt(8);
-		String dniFormateado = dniValido.replace(letraDni, Character.toUpperCase(letraDni));
-		this.dni = dniFormateado;
-	}
+			
+}
 	
 }
