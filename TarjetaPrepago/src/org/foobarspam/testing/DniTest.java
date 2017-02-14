@@ -2,6 +2,8 @@ package org.foobarspam.testing;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.foobarspam.Dni.Dni;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,6 @@ public class DniTest {
 	
 	@Test
 	public void testObtenerLetra() {
-		primerDni.obtenerLetra();
 	}
-	
+
 }

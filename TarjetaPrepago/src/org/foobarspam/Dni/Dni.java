@@ -1,8 +1,10 @@
 package org.foobarspam.Dni;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Dni {
-
+	
 	private String dni  = null;
 	private Boolean numeroSano = false;
 	private Boolean letraSana 	= false;
@@ -119,7 +121,6 @@ public class Dni {
 		catch(IOException ioexcepcion){
 			return false;
 		}
-			
-}
+	}
 	
 }
