@@ -23,8 +23,14 @@ public class Fecha {
 		return this.currentDate;
 	}
 	
+	public String getFecha() {
+		String fecha = this.day +"-"+ mesLetra() +"-"+this.year;
+		return fecha;
+	}
+	
 	//setters
 	public void setDate(int day, int month, int year) {
+		//OJO REFACTORIZAR CON METODO daysOfMonth()
 		int[] thirtyOneDaysMonth = {1,3,5,7,8,10,12};
 		int[] thirtyDaysMonth = {4, 6, 9, 11};
 		if (isIn(month, thirtyOneDaysMonth)) {
@@ -53,6 +59,21 @@ public class Fecha {
 		}
 	}
 	
+	public void setDay(int day) {
+		this.day = day;
+	}
+	
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	public void setCurrentDate(int day, int month, int year) {
+		this.currentDate = new int[] {day, month, year};
+	}
 	
 	//metodos
 	public static boolean isIn(int month, int[] months) {
@@ -66,6 +87,7 @@ public class Fecha {
 	
 	private int daysOfMonth(int month) {
 		int[] daysPerMonth = {
+				0, //Elemento 0 del array
 				31, //Enero
 			    28, //Febrero
 			    31, //Marzo
@@ -88,13 +110,49 @@ public class Fecha {
 	 * e incrementa la fecha en dicha cantidad de dias.
 	 */
 		int[] date = getCurrentDate();
-		int currentDay = date[0];
+		int totalDays = date[0] + days;
 		int month = date[1];
+		int year = date[2];
 		int maxDaysMonth = daysOfMonth(month);
-		while (days+currentDay>maxDaysMonth) {
+		while (totalDays>maxDaysMonth) {
+			totalDays = totalDays - maxDaysMonth;
 			month++;
-			days = days - currentDay;
+			if (month>12) {
+				month = 1;
+				year++;
+			}
+			maxDaysMonth = daysOfMonth(month);
 		}
+		setCurrentDate(totalDays, month, year);
+		setDay(totalDays);
+		setMonth(month);
+		setYear(year);
 	}
-
+	
+	public void imprimirFecha() {
+	/*
+	 * imprimirFecha(): escribe la fecha en el formato
+	 * dia-mes-año en consola. Se mostrará el nombre del mes, no el número
+	 */
+		System.out.println(this.day +"-"+ mesLetra() +"-"+this.year);
+	}
+	
+	private String mesLetra() {
+		String[] meses = {
+				"Elemento 0",
+				"Enero",
+				"Febrero",
+				"Marzo",
+				"Abril",
+				"Mayo",
+				"Junio",
+				"Julio",
+				"Agosto",
+				"Septiembre",
+				"Octubre",
+				"Noviembre",
+				"Diciembre"
+		};
+		return meses[this.month];
+	}
 }

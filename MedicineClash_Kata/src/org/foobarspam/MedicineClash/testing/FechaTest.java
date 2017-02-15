@@ -55,5 +55,54 @@ public class FechaTest {
 		assertTrue(date1.isIn(3, thirtyOneDaysMonth));
 		assertFalse(date1.isIn(3, thirtyDaysMonth));
 	}
+	
+	@Test
+	public void testIncrementarFecha() {
+		Fecha date1 = new Fecha(1, 1, 2017);
+		date1.incrementarFecha(10);
+		int[] expected = {11, 1, 2017};
+		assertArrayEquals(expected, date1.getCurrentDate());
+		
+		date1.incrementarFecha(30);
+		expected = new int[] {10, 2, 2017};
+		assertArrayEquals(expected, date1.getCurrentDate());
 
+		date1.incrementarFecha(40);
+		expected = new int[] {22, 3, 2017};
+		assertArrayEquals(expected, date1.getCurrentDate());
+		
+		date1.incrementarFecha(150);
+		expected = new int[] {19, 8, 2017};
+		assertArrayEquals(expected, date1.getCurrentDate());
+		
+		date1.incrementarFecha(365);
+		expected = new int[] {19, 8, 2018};
+		assertArrayEquals(expected, date1.getCurrentDate());
+	}
+
+	@Test
+	public void testImprimirFecha() {
+		Fecha date1 = new Fecha(1, 1, 2017);
+		date1.imprimirFecha();
+		//==> Tiene que imprimir: 1-Enero-2017
+		
+		date1 = new Fecha(28, 2, 2000);
+		date1.imprimirFecha();
+		//==> Tiene que imprimir: 28-Febrero-2000
+		
+		date1 = new Fecha(12, 10, 2015);
+		date1.imprimirFecha();
+		//==> Tiene que imprimir: 12-Octubre-2015
+		
+		date1 = new Fecha(17, 6, 1993);
+		date1.imprimirFecha();
+		//==> Tiene que imprimir: 17-Junio-1993
+	}
+	
+	@Test
+	public void testGetFecha() {
+		Fecha date1 = new Fecha(1, 1, 2017);
+		assertEquals("1-Enero-2017", date1.getFecha());
+	}
+	
 }
