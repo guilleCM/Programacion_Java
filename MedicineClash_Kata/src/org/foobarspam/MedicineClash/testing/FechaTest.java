@@ -105,4 +105,10 @@ public class FechaTest {
 		assertEquals("1-Enero-2017", date1.getFecha());
 	}
 	
+	@Test
+	public void testFechaLocal() {
+		//==> expected ==> tu fecha actual en el momento del test
+		int[] expected = {15, 2, 2017};
+		assertArrayEquals(expected, Fecha.fechaLocal());
+	}
 }

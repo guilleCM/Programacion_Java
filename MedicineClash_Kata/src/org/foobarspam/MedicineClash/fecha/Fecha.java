@@ -1,5 +1,7 @@
 package org.foobarspam.MedicineClash.fecha;
 
+import java.util.Calendar;
+
 public class Fecha {
 	
 	//Propiedades
@@ -11,6 +13,7 @@ public class Fecha {
 	//Constructores
 	public Fecha() {
 	}
+	
 	public Fecha(int day, int month, int year) {
 		this.day = day;
 		this.month = month;
@@ -129,6 +132,23 @@ public class Fecha {
 		setYear(year);
 	}
 	
+//	public void calcularFechaAnterior(int days) {
+//		int[] date = getCurrentDate();
+//		int totalDays = date[0] + days;
+//		int month = date[1];
+//		int year = date[2];
+//		int maxDaysMonth = daysOfMonth(month);
+//		while (totalDays>maxDaysMonth) {
+//			totalDays = totalDays - maxDaysMonth;
+//			month++;
+//			if (month>12) {
+//				month = 1;
+//				year++;
+//			}
+//			maxDaysMonth = daysOfMonth(month);
+//		}
+//	}
+	
 	public void imprimirFecha() {
 	/*
 	 * imprimirFecha(): escribe la fecha en el formato
@@ -155,4 +175,13 @@ public class Fecha {
 		};
 		return meses[this.month];
 	}
+
+	public static int[] fechaLocal() {
+	    Calendar rightNow = Calendar.getInstance();
+	    int y = rightNow.get(Calendar.YEAR);
+	    int m = rightNow.get(Calendar.MONTH) + 1;
+	    int d = rightNow.get(Calendar.DAY_OF_MONTH);
+	    return new int[] {d, m, y};
+	}
+	
 }

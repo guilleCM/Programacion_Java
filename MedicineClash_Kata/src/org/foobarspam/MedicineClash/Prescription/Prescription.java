@@ -1,20 +1,33 @@
 package org.foobarspam.MedicineClash.Prescription;
 
-import java.util.Calendar;
-import java.util.Date;
+import org.foobarspam.MedicineClash.fecha.Fecha;
 
 public class Prescription {
-    
-    private Calendar dispenseDate = Calendar.getInstance();
+    //propiedades
+    private Fecha dispenseDate = new Fecha();
     private int daysSupply = 30;
-    
-    public Calendar getDispenseDate() {
+    private int[] lastDaySupply = Fecha.fechaLocal();
+
+    //constructores
+    public Prescription(Fecha dispenseDate, int daysSupply) {
+        this.dispenseDate = dispenseDate;
+        this.daysSupply = daysSupply;
+        this.lastDaySupply = setLastDaySupply(daysSupply);
+    }
+
+    //getters
+    public Fecha getDispenseDate() {
     	return this.dispenseDate;
     }
     
-    public Prescription(Calendar dispenseDate, int daysSupply) {
-        this.dispenseDate = dispenseDate;
-        this.daysSupply = daysSupply;
+    public int[] getLastDaySupply() {
+    	return this.lastDaySupply;
     }
-
+    
+    //metodos
+    private int[] setLastDaySupply(int daysSupply) {
+    	Fecha supplyDate = getDispenseDate();
+    	supplyDate.incrementarFecha(this.daysSupply);
+    	return  supplyDate.getCurrentDate();
+    }
 }
