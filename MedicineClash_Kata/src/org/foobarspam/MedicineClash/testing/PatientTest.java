@@ -27,7 +27,7 @@ public class PatientTest {
 	
 	@Before
 	public void setUp(){
-		fecha1 = new Fecha(1,1,2017);
+		fecha1 = new Fecha(1,2,2017);
 		prescription = new Prescription(fecha1, 3);
 		prescription2 = new Prescription(fecha1, 7);
 		medicine = new Medicine("Paracetamol");
@@ -54,6 +54,7 @@ public class PatientTest {
 	
 	@Test
 	public void testClash() {
+		ArrayList<String> medicinas = 
 		Collection<String> consulta = new ArrayList<>();
 		consulta.add("Paracetamol");
 		System.out.println(sickPatient.clash(consulta));

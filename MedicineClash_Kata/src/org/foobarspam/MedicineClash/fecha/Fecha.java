@@ -184,4 +184,12 @@ public class Fecha {
 	    return new int[] {d, m, y};
 	}
 	
+//	public static Fecha fechaPasada(Fecha fecha1, Fecha fecha2) {
+//		for (int i = 2; i!=0; i--) {
+//			if (fecha1.currentDate[i] > fecha2.currentDate[i]) {
+//				
+//			}
+//		}
+//	}
+	
 }

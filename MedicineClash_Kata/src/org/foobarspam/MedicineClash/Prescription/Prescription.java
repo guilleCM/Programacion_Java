@@ -1,18 +1,20 @@
 package org.foobarspam.MedicineClash.Prescription;
 
+import java.util.ArrayList;
+
 import org.foobarspam.MedicineClash.fecha.Fecha;
 
 public class Prescription {
     //propiedades
-    private Fecha dispenseDate = new Fecha();
+    private Fecha dispenseDate = new Fecha();//por defecto {1,1,1900}
     private int daysSupply = 30;
-    private int[] lastDaySupply = Fecha.fechaLocal();
+    private ArrayList<Fecha> daysOfSupply = new ArrayList<>();
 
     //constructores
     public Prescription(Fecha dispenseDate, int daysSupply) {
         this.dispenseDate = dispenseDate;
         this.daysSupply = daysSupply;
-        this.lastDaySupply = setLastDaySupply(daysSupply);
+        expectedDaysOfSupply();
     }
 
     //getters
@@ -20,14 +22,23 @@ public class Prescription {
     	return this.dispenseDate;
     }
     
-    public int[] getLastDaySupply() {
-    	return this.lastDaySupply;
+    public ArrayList<Fecha> getDaysOfSupply() {
+    	return this.daysOfSupply;
     }
     
-    //metodos
-    private int[] setLastDaySupply(int daysSupply) {
-    	Fecha supplyDate = getDispenseDate();
-    	supplyDate.incrementarFecha(this.daysSupply);
-    	return  supplyDate.getCurrentDate();
+    public int getDaysSupply() {
+    	return this.daysSupply;
     }
+    
+    //metodos    
+    private void expectedDaysOfSupply() {
+    	int remainDays = getDaysSupply();
+    	Fecha currentDate = getDispenseDate();
+    	while (remainDays != 0) {
+    		this.daysOfSupply.add(currentDate);
+    		currentDate.incrementarFecha(1);
+    		remainDays--;
+    	}
+    }
+    
 }

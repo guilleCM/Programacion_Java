@@ -33,13 +33,12 @@ public class Patient {
     	//many days before today to consider, (defaults to the 
     	//last 90 days). It should return a collection of days 
     	//on which all the medicines were being taken during this time.
-    	Collection<Fecha> medicinesTaken = new ArrayList<>();
-    	Fecha fecha1 = new Fecha(1,1,1900);
-    	medicinesTaken.add(fecha1);
+    	Collection<Fecha> medicineClash = new ArrayList<>();
     	int[] fecha = Fecha.fechaLocal();
     	for (String medicine : medicineNames) {
+    		
     	}
-        return medicinesTaken;
+        return medicineClash;
     }
 
 }
