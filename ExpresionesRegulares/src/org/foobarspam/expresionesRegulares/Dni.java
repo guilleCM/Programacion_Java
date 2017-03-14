@@ -23,7 +23,7 @@ public class Dni extends IdCard{
 		this.numeroId = numeroId;
 	}
 	//METODOS
-	public boolean esValido() {
+	public boolean tieneFormatoValido() {
 		Pattern pattern = 
 		Pattern.compile(getRegExp());
 
@@ -37,5 +37,18 @@ public class Dni extends IdCard{
         	return false;
         }
     }
+	
+	public boolean tieneLetraCorrecta() {
+		if(tieneFormatoValido()){
+			int parteNumerica = Integer.parseInt(getNumeroId().substring(0, 8));
+			char letraControl = getNumeroId().charAt(8);
+			int indice = parteNumerica%23;
+			char letraCorrespondiente = getTablaAsignacion()[indice];
+			if (letraControl == letraCorrespondiente) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }
