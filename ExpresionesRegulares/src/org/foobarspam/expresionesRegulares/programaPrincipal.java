@@ -18,13 +18,14 @@ public class programaPrincipal {
 		}
 		
 		System.out.println("El formato del DNI: " + dni.getNumeroId() + " es correcto!");
-		System.out.println("Comprobando la letra de control...");
 		while(!dni.tieneLetraCorrecta()) {
 			System.out.println("La letra de control no es adecuada, introduce el DNI de nuevo: ");
 			input = new Scanner(System.in);
 		    numeroID = input.nextLine();
 			dni.setNumeroId(numeroID);
 		}
+		System.out.println("El DNI introducido es válido! \n");
+
 		System.out.println("\nAhora introduce un NIE: ");
 		input = new Scanner(System.in);
 		numeroID = input.nextLine();
@@ -36,13 +37,13 @@ public class programaPrincipal {
 			nie.setNumeroId(numeroID);
 		}
 		System.out.println("El formato del NIE: " + nie.getNumeroId() + " es correcto!");
-		System.out.println("Comprobando la letra de control...");
 		while(!nie.tieneLetraCorrecta()) {
 			System.out.println("La letra de control no es adecuada, introduce el NIE de nuevo: ");
 			input = new Scanner(System.in);
 		    numeroID = input.nextLine();
 			nie.setNumeroId(numeroID);
 		}
+		System.out.println("El NIE introudico es válido!");
 		System.out.println("Finalizado el programa");
 		System.exit(0);
 	}
