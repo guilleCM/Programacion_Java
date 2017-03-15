@@ -14,7 +14,6 @@ public class Dni extends IdCard{
 	public Dni(String numeroId){
 		super(numeroId);
 	}
-	//prueba
 	
 	//SETTER Y GETTER
 	public String getRegExp() {
