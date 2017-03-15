@@ -10,7 +10,7 @@ public class Dni extends IdCard{
 	//CONSTRUCTOR
 	public Dni() {
 	}
-	//comentariooo
+	
 	public Dni(String numeroId){
 		super(numeroId);
 	}
