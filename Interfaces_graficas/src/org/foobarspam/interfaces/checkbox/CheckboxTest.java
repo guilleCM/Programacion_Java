@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -55,20 +57,14 @@ public class CheckboxTest{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		ArrayList<Solicitante> solicitantes = new ArrayList<Solicitante>();
 		//BOTON ACEPTAR
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Solicitante solicitante = new Solicitante(txtNumdni.getText(), getSelectedCheckBox(), comboBox.getSelectedItem().toString() );
-				try(FileWriter fw = new FileWriter("src/org/foobarspam/interfaces/checkbox/EstatSolicitants.txt", true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					PrintWriter out = new PrintWriter(bw))
-					{
-					    out.println(solicitante.getDni()+" " + solicitante.getEstado()+" "+
-					    		solicitante.getSexo());
-					} catch (IOException error) {
-					   System.out.println(error);
-					}
-				
+				solicitantes.add(solicitante);
+				JOptionPane.showMessageDialog(null, "Guardado el solicitante.\n"
+						+ "Aprieta Limpiar o sobreescribe los datos para guardar otro solicitante.");
 			}
 		});
 		btnAceptar.setBounds(8, 164, 89, 42);
@@ -78,9 +74,11 @@ public class CheckboxTest{
 		btnLimpiar.setBounds(125, 164, 89, 42);
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtNumdni.setText("");
 				checkTrabajando.setSelected(false);
 				checkParo.setSelected(false);
 				checkEstudiando.setSelected(false);
+				comboBox.setSelectedItem("Hombre");
 			}
 		});
 		frame.getContentPane().add(btnLimpiar);
@@ -88,6 +86,17 @@ public class CheckboxTest{
 		//BOTON SALIR
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try(FileWriter fw = new FileWriter("src/org/foobarspam/interfaces/checkbox/EstatSolicitants.txt", true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter out = new PrintWriter(bw)) {
+					for (int i = 0; i<solicitantes.size(); i++) {
+						out.println(solicitantes.get(i).getDni()+" "+ 
+									solicitantes.get(i).getEstado()+" "+
+									solicitantes.get(i).getSexo());
+					}
+					} catch (IOException error) {
+						System.out.println(error);
+					}
 				System.exit(0);
 			}
 		});
