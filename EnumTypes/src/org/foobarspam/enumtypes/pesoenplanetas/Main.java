@@ -8,12 +8,12 @@ public class Main {
 		System.out.println("Introduce tu peso en KG: ");
 		Scanner input = new Scanner(System.in);
 		Integer peso = Integer.parseInt(input.nextLine());
-		Planet tierra = Planet.EARTH;
+		Planeta tierra = Planeta.EARTH;
 
-		double masa = peso/tierra.getGravityInPlanet();
+		double masa = peso/tierra.getGravedadEnPlaneta();
 
-		for (Planet planeta : Planet.values()) {
-			double pesoEnPlaneta = masa * planeta.getGravityInPlanet();
+		for (Planeta planeta : Planeta.values()) {
+			double pesoEnPlaneta = masa * planeta.getGravedadEnPlaneta();
 			System.out.println("Tu peso en "+ planeta.name() + " es:\t" + pesoEnPlaneta);
 		}
 
