@@ -20,10 +20,10 @@ public class Regulator {
 
 		switch (code) {
 			case HEATING:
-				System.out.println("Calentando => Temperatura + 1: " + temperature.getTemperature());
+				System.out.println("Calentando => Temperatura: " + temperature.getTemperature());
 				break;
 			case WAITING:
-				System.out.println("Apagado => Temperatura - 1: " + temperature.getTemperature());
+				System.out.println("Apagado => Temperatura: " + temperature.getTemperature());
 				break;
 			default:
 				System.out.println("Algo no ha ido bien!");
