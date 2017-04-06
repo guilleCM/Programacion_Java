@@ -1,5 +1,7 @@
 package org.foobarspam.MockitoEjemplo;
 
+import static org.mockito.Mockito.when;
+
 import org.foobarspam.MockitoEjemplo.Conductora;
 import org.foobarspam.MockitoEjemplo.PoolConductoras;
 import org.foobarspam.MockitoEjemplo.Tarifa;
@@ -16,7 +18,8 @@ public class Carrera {
 	private int tiempoCarrera = 0;
 	private double costeTotal = 0;
 	private int propina = 0;
-	
+	//mocks
+	private Tarificable mockTarifa = null;
 	private Conductora conductor = null;
 	
 	public Carrera(String tarjetaCredito){
@@ -54,7 +57,11 @@ public class Carrera {
 	
 	// las clases estaticas no pueden mockearse en Mockito
 	public double getCosteEsperado(){
-		return Tarifa.getCosteTotalEsperado(this);
+		return mockTarifa.getCosteTotalEsperado(this);
+	}
+	
+	public void setTarifa(Tarificable tarifa) {
+		this.mockTarifa = tarifa;
 	}
 
 	public int getTiempoEsperado() {

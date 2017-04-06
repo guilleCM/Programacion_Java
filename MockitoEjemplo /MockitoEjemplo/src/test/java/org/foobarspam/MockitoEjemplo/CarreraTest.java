@@ -180,4 +180,20 @@ public class CarreraTest {
 		Boolean expected = true;
 		assertEquals(expected, carrera.getEstadoConductor());
 	}
+	
+	@Test
+	public void testGetCosteEsperado(){
+		carrera = new Carrera("Tarjeta VISA");
+		carrera.setDistancia(25.0);
+		carrera.setTiempoEsperado(20);
+
+		Tarificable mockTarifa = mock(Tarifa.class);
+		when(mockTarifa.getCosteTotalEsperado(carrera)).thenReturn(12.5);
+
+		carrera.setTarifa(mockTarifa);
+		
+		double expected = 12.5;
+		assertEquals(expected, carrera.getCosteEsperado(),0.1);
+	}
+	
 }
