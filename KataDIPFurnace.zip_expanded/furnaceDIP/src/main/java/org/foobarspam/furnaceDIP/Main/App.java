@@ -5,8 +5,12 @@ import org.foobarspam.furnaceDIP.hardware.Regulator;
 import org.foobarspam.furnaceDIP.hardware.RemoteCommandSensor;
 import org.foobarspam.furnaceDIP.interfaces.Heater;
 import org.foobarspam.furnaceDIP.interfaces.Thermometer;
+import org.foobarspam.furnaceDIP.inyector.ReguladorModule;
 import org.foobarspam.furnaceDIP.otherstuff.Jedi;
 import org.foobarspam.furnaceDIP.types.RoomTemperature;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 /**
  * Hello world!
@@ -20,17 +24,19 @@ public class App
         final double maxTemp = 21.0;
         
         RoomTemperature temperature = new RoomTemperature(15);
-        Heater heater = new GasHeater();
-        Thermometer thermometer = new RemoteCommandSensor();
         
-        Regulator regulator = new Regulator();
+        Injector injector = Guice.createInjector(new ReguladorModule());  
+        Regulator regulador = injector.getInstance(Regulator.class);
+        regulador.setMinTemp(minTemp);
+        regulador.setMaxTemp(maxTemp);
+        regulador.setTemperature(temperature);
         
         System.out.println( "Arrancando..." );
-        regulator.regulate(thermometer, heater, minTemp, maxTemp, temperature);
+        regulador.regulate();
         
         Jedi yoda = new Jedi();
         System.out.println( "\nArrancando a Yoda: " );
-        regulator.regulate(thermometer, yoda, minTemp, maxTemp, temperature);
+        regulador.regulate();
         yoda.speak();
     }
 }

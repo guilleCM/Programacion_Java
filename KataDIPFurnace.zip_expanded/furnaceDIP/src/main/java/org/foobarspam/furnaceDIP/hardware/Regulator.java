@@ -1,27 +1,55 @@
 package org.foobarspam.furnaceDIP.hardware;
 
 import org.foobarspam.furnaceDIP.interfaces.Heater;
+import org.foobarspam.furnaceDIP.interfaces.Regulate;
 import org.foobarspam.furnaceDIP.interfaces.Thermometer;
+import org.foobarspam.furnaceDIP.inyector.Force;
 import org.foobarspam.furnaceDIP.types.RegulatorDisplayCodes;
 import org.foobarspam.furnaceDIP.types.RoomTemperature;
 
-public class Regulator {
+import com.google.inject.Inject;
+
+public class Regulator implements Regulate {
 	
-	public void regulate(Thermometer t, Heater h, double minTemp, double maxTemp, RoomTemperature temperature){
-			RegulatorDisplayCodes code;
+	private Thermometer t;
+	private Heater h;
+	private double minTemp;
+	private double maxTemp;
+	private RoomTemperature temperature;
+	private RegulatorDisplayCodes code;
+	
+	@Inject
+	Regulator(Thermometer t, @Force Heater h) {
+		this.t = t;
+		this.h = h;
+	}
+	
+	public void setTemperature(RoomTemperature temperature) {
+		this.temperature = temperature;
+	}
+	
+	public void setMinTemp(double minTemp) {
+		this.minTemp = minTemp;
+	}
+	
+	public void setMaxTemp(double maxTemp) {
+		this.maxTemp = maxTemp;
+	}
+	
+	public void regulate(){
 			while(t.read(temperature) < maxTemp){
-				code = RegulatorDisplayCodes.HEATING;				
+				this.code = RegulatorDisplayCodes.HEATING;				
 				h.engage(temperature);
-				message(code, temperature);
+				message();
 			}
 			while (t.read(temperature) > minTemp){
-				code = RegulatorDisplayCodes.WAITING;
+				this.code = RegulatorDisplayCodes.WAITING;
 				h.disengage(temperature);			
-				message(code, temperature);
+				message();
 			}
 	}
 
-	private void message(RegulatorDisplayCodes code, RoomTemperature temperature){
+	public void message(){
 		switch(code){
 			case HEATING:
 				System.out.println("Calentando => temperatura "+ temperature.getTemperature());
